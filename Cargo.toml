@@ -1,0 +1,16 @@
+[package]
+name = "lil_fortress"
+version = "0.1.0"
+authors = []
+edition = "2018"
+
+[features]
+default = ["metal", "tiles"]
+empty = ["amethyst/empty"]
+metal = ["amethyst/metal"]
+vulkan = ["amethyst/vulkan"]
+tiles = ["amethyst/tiles"]
+
+[dependencies]
+amethyst = "0.15.0"
+bracket-noise = "0.8.1"
