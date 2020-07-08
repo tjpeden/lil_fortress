@@ -1,0 +1,115 @@
+#![enable(implicit_some)]
+Container(
+    transform: (
+        id: "legend",
+        x: -272.,
+        width: 416.,
+        height: 1472.,
+        anchor: MiddleRight,
+    ),
+    background: SolidColor(0.1, 0.1, 0.25, 0.9),
+    children: [
+        Label(
+            transform: (
+                id: "key_announcements",
+                x: 40.,
+                y: -32.,
+                height: 32.,
+                width: 32.,
+                tab_order: 1,
+                anchor: TopLeft,
+            ),
+            text: (
+                text: "a",
+                font_size: 32.,
+                color: (0.0, 1.0, 0.0, 1.0),
+                align: MiddleLeft,
+            ),
+        ),
+        Label(
+            transform: (
+                id: "description_announcements",
+                x: 264.,
+                y: -32.,
+                width: 448.,
+                height: 32.,
+                tab_order: 1,
+                anchor: TopLeft,
+            ),
+            text: (
+                text: ": View Announcements",
+                font_size: 32.,
+                color: (1.0, 1.0, 1.0, 1.0),
+                align: MiddleLeft,
+            ),
+        ),
+        Label(
+            transform: (
+                id: "key_buildings",
+                x: 40.,
+                y: -72.,
+                height: 32.,
+                width: 32.,
+                tab_order: 1,
+                anchor: TopLeft,
+            ),
+            text: (
+                text: "b",
+                font_size: 32.,
+                color: (0.0, 1.0, 0.0, 1.0),
+                align: MiddleLeft,
+            ),
+        ),
+        Label(
+            transform: (
+                id: "description_buildings",
+                x: 264.,
+                y: -72.,
+                width: 448.,
+                height: 32.,
+                tab_order: 1,
+                anchor: TopLeft,
+            ),
+            text: (
+                text: ": Site a Building",
+                font_size: 32.,
+                color: (1.0, 1.0, 1.0, 1.0),
+                align: MiddleLeft,
+            ),
+        ),
+        Label(
+            transform: (
+                id: "key_designations",
+                x: 40.,
+                y: -112.,
+                height: 32.,
+                width: 32.,
+                tab_order: 1,
+                anchor: TopLeft,
+            ),
+            text: (
+                text: "d",
+                font_size: 32.,
+                color: (0.0, 1.0, 0.0, 1.0),
+                align: MiddleLeft,
+            ),
+        ),
+        Label(
+            transform: (
+                id: "description_designations",
+                x: 264.,
+                y: -112.,
+                width: 448.,
+                height: 32.,
+                tab_order: 1,
+                anchor: TopLeft,
+            ),
+            text: (
+                text: ": Designations",
+                font_size: 32.,
+                color: (1.0, 1.0, 1.0, 1.0),
+                align: MiddleLeft,
+            ),
+        ),
+    ],
+)

@@ -7,6 +7,10 @@ use fortress::{
 
 use amethyst::{
     core::transform::TransformBundle,
+    input::{
+        InputBundle,
+        StringBindings,
+    },
     prelude::*,
     renderer::{
         plugins::{RenderFlat2D, RenderToWindow},
@@ -16,6 +20,10 @@ use amethyst::{
     tiles::{
         MortonEncoder,
         RenderTiles2D,
+    },
+    ui::{
+        RenderUi,
+        UiBundle,
     },
     utils::application_root_dir,
 };
@@ -30,6 +38,9 @@ fn main() -> amethyst::Result<()> {
     let display_config_path = config_dir.join("display.ron");
 
     let game_data = GameDataBuilder::default()
+    .with_bundle(TransformBundle::new())?
+    .with_bundle(InputBundle::<StringBindings>::new())?
+    .with_bundle(UiBundle::<StringBindings>::new())?
     .with_bundle(
         RenderingBundle::<DefaultBackend>::new()
         .with_plugin(
@@ -37,9 +48,9 @@ fn main() -> amethyst::Result<()> {
             .with_clear([0.0, 0.0, 0.0, 1.0]),
         )
         .with_plugin(RenderFlat2D::default())
-        .with_plugin(RenderTiles2D::<MapTile, MortonEncoder>::default()),
-    )?
-    .with_bundle(TransformBundle::new())?;
+        .with_plugin(RenderTiles2D::<MapTile, MortonEncoder>::default())
+        .with_plugin(RenderUi::default()),
+    )?;
 
     let mut game = Application::new(assets_dir, Fortress, game_data)?;
 

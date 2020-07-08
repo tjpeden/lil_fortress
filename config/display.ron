@@ -1,4 +1,4 @@
 (
   title: "Lil Fortress",
-  dimensions: Some((512, 512)),
+  dimensions: Some((1280, 800)),
 )

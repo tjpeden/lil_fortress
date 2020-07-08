@@ -18,6 +18,7 @@ use amethyst::{
     renderer::{
         camera::Camera,
         formats::texture::ImageFormat,
+        palette::Srgba,
         sprite::{
             SpriteSheet,
             SpriteSheetFormat,
@@ -30,16 +31,29 @@ use amethyst::{
         Tile,
         TileMap,
     },
+    ui::UiCreator,
     window::ScreenDimensions,
     winit::VirtualKeyCode,
 };
+
+const WIDTH: u32 = 80;
+const HEIGHT: u32 = 50;
 
 #[derive(Default, Clone)]
 pub struct MapTile;
 
 impl Tile for MapTile {
-    fn sprite(&self, _: Point3<u32>, _: &World) -> Option<usize> {
-        Some(0xDB)
+    fn sprite(&self, Point3 { coords }: Point3<u32>, _: &World) -> Option<usize> {
+        match (coords.x, coords.y) {
+            // _ => Some(0x20),
+            _ => Some(0xDB),
+        }
+    }
+
+    fn tint(&self, Point3 { coords }: Point3<u32>, _: &World) -> Srgba {
+        match (coords.x, coords.y) {
+            _ => Srgba::new(1.0, 1.0, 1.0, 1.0)
+        }
     }
 }
 
@@ -51,6 +65,7 @@ impl SimpleState for Fortress {
 
         create_map(world);
         create_camera(world);
+        create_ui(world);
     }
 
     fn handle_event(
@@ -93,15 +108,17 @@ fn load_sprite_sheet(world: &mut World, png_path: &str, ron_path: &str) -> Sprit
 fn create_map(world: &mut World) {
     let map_sprite_sheet_handle = load_sprite_sheet(
         world,
-        "aesomatica_16x16.png",
-        "aesomatica_16x16.ron",
+        "texture/aesomatica_16x16.png",
+        "texture/aesomatica_16x16.ron",
     );
     let map = TileMap::<MapTile, MortonEncoder>::new(
-        Vector3::new(32, 32, 1),
+        Vector3::new(WIDTH, HEIGHT, 1),
         Vector3::new(16, 16, 1),
         Some(map_sprite_sheet_handle),
     );
-    let transform = Transform::default();
+    let mut transform = Transform::default();
+
+    transform.set_translation_xyz(8.0, -8.0, 0.5);
 
     world
     .create_entity()
@@ -112,17 +129,27 @@ fn create_map(world: &mut World) {
 }
 
 fn create_camera(world: &mut World) {
-    let (width, height) = {
+    let (width, height, dpi) = {
         let dimensions = world.read_resource::<ScreenDimensions>();
 
-        (dimensions.width(), dimensions.height())
+        (dimensions.width(), dimensions.height(), dimensions.hidpi_factor() as f32)
     };
-    let transform = Transform::from(Vector3::new(0.5, 0.5, 0.5));
+    let mut transform = Transform::default();
+
+    transform.set_translation_xyz(0.0, 0.0, 1.0);
 
     world
     .create_entity()
-    .with(Camera::standard_2d(width, height))
+    .with(Camera::standard_2d(width / dpi, height / dpi))
     .with(transform)
     .named("Camera")
     .build();
+}
+
+fn create_ui(world: &mut World) {
+    world.exec(
+        |mut creator: UiCreator<'_>| {
+            creator.create("ui/legend.ron", ());
+        }
+    );
 }
